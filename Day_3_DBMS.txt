@@ -1,0 +1,635 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.13 sec)
+
+MariaDB [(none)]> CREATE DATABASE we2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> CREATE TABLE Manufactures;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> USE we2018;
+Database changed
+MariaDB [we2018]> CREATE TABLE Manufactures;
+ERROR 1113 (42000): A table must have at least 1 column
+MariaDB [we2018]> CREATE TABLE Manufactures(Code int(10), Name char(20));
+Query OK, 0 rows affected (0.50 sec)
+
+MariaDB [we2018]> CREATE TABLE Products(Code int(10), Name Text , price real(20), Manufacture int(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '), Manufacture int(20))' at line 1
+MariaDB [we2018]> CREATE TABLE Products(Code int(10), Name Text , price real, Manufacture int(20));
+Query OK, 0 rows affected (0.56 sec)
+
+MariaDB [we2018]> drop table manufactures;
+Query OK, 0 rows affected (0.26 sec)
+
+MariaDB [we2018]> CREATE TABLE Manufactures(Code int(10), Name text);
+Query OK, 0 rows affected (0.40 sec)
+
+MariaDB [we2018]> insert into manufactures(1, Sony);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1, Sony)' at line 1
+MariaDB [we2018]> insert into manufactures(1, "Sony");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1, "Sony")' at line 1
+MariaDB [we2018]> insert into manufactures values(1, "Sony");
+Query OK, 1 row affected (0.08 sec)
+
+MariaDB [we2018]> insert into manufactures values(2, "Creative Labs");
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [we2018]> insert into manufactures values(3, "Hawletts-Packard");
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [we2018]> insert into manufactures values(4, "Iomega"),(5,"Fujitsu"),(6,"Winchester");
+Query OK, 3 rows affected (0.45 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [we2018]> show table manufactures;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'manufactures' at line 1
+MariaDB [we2018]> select * manufactures;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'manufactures' at line 1
+MariaDB [we2018]> select * from manufactures;
++------+------------------+
+| Code | Name             |
++------+------------------+
+|    1 | Sony             |
+|    2 | Creative Labs    |
+|    3 | Hawletts-Packard |
+|    4 | Iomega           |
+|    5 | Fujitsu          |
+|    6 | Winchester       |
++------+------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO products values(1,"Hard Drive",240.00,5);
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> INSERT INTO products values(2,"Memory","120.00",6),(3,"zip drive",150.00,4),(4,"Floppy Disk",5.00,6),(5,"Monitor",240.00,1),(6,"DVD drive",180.00,2),(7,"CD drive",90.00,2),(8,"Printer",270.00,3),(9,"Toner cartridge",66.00,3),(10,"DVD burner",180.00,2);
+Query OK, 9 rows affected (0.45 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+MariaDB [we2018]> select * from products;
++------+-----------------+-------+-------------+
+| Code | Name            | price | Manufacture |
++------+-----------------+-------+-------------+
+|    1 | Hard Drive      |   240 |           5 |
+|    2 | Memory          |   120 |           6 |
+|    3 | zip drive       |   150 |           4 |
+|    4 | Floppy Disk     |     5 |           6 |
+|    5 | Monitor         |   240 |           1 |
+|    6 | DVD drive       |   180 |           2 |
+|    7 | CD drive        |    90 |           2 |
+|    8 | Printer         |   270 |           3 |
+|    9 | Toner cartridge |    66 |           3 |
+|   10 | DVD burner      |   180 |           2 |
++------+-----------------+-------+-------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name from products;
++-----------------+
+| name            |
++-----------------+
+| Hard Drive      |
+| Memory          |
+| zip drive       |
+| Floppy Disk     |
+| Monitor         |
+| DVD drive       |
+| CD drive        |
+| Printer         |
+| Toner cartridge |
+| DVD burner      |
++-----------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, price FROM products;
++-----------------+-------+
+| name            | price |
++-----------------+-------+
+| Hard Drive      |   240 |
+| Memory          |   120 |
+| zip drive       |   150 |
+| Floppy Disk     |     5 |
+| Monitor         |   240 |
+| DVD drive       |   180 |
+| CD drive        |    90 |
+| Printer         |   270 |
+| Toner cartridge |    66 |
+| DVD burner      |   180 |
++-----------------+-------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name FROM products WHERE price < 200;
++-----------------+
+| name            |
++-----------------+
+| Memory          |
+| zip drive       |
+| Floppy Disk     |
+| DVD drive       |
+| CD drive        |
+| Toner cartridge |
+| DVD burner      |
++-----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name FROM products WHERE price BETWEEN 60 AND 120;
++-----------------+
+| name            |
++-----------------+
+| Memory          |
+| CD drive        |
+| Toner cartridge |
++-----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name='%C' ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name="%C" ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name="CD drive" ;
++------+----------+-------+-------------+
+| Code | Name     | price | Manufacture |
++------+----------+-------+-------------+
+|    7 | CD drive |    90 |           2 |
++------+----------+-------+-------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name="%c" ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name="c%" ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name="%c%" ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name LIKE [c]% ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[c]%' at line 1
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name LIKE '[c]%' ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE name LIKE '[C]%' ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE name LIKE '[M]%' ;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE name LIKE 'M%' ;
++------+---------+-------+-------------+
+| Code | Name    | price | Manufacture |
++------+---------+-------+-------------+
+|    2 | Memory  |   120 |           6 |
+|    5 | Monitor |   240 |           1 |
++------+---------+-------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE CODE=7 AND name LIKE 'c%' ;
++------+----------+-------+-------------+
+| Code | Name     | price | Manufacture |
++------+----------+-------+-------------+
+|    7 | CD drive |    90 |           2 |
++------+----------+-------+-------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, price=PRICE*100 FROM products ;
++-----------------+-----------------+
+| name            | price=PRICE*100 |
++-----------------+-----------------+
+| Hard Drive      |               0 |
+| Memory          |               0 |
+| zip drive       |               0 |
+| Floppy Disk     |               0 |
+| Monitor         |               0 |
+| DVD drive       |               0 |
+| CD drive        |               0 |
+| Printer         |               0 |
+| Toner cartridge |               0 |
+| DVD burner      |               0 |
++-----------------+-----------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT AVG(price) FROM PRODUCTS;
++------------+
+| AVG(price) |
++------------+
+|      154.1 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT (price*100) FROM PRODUCTS;
++-------------+
+| (price*100) |
++-------------+
+|       24000 |
+|       12000 |
+|       15000 |
+|         500 |
+|       24000 |
+|       18000 |
+|        9000 |
+|       27000 |
+|        6600 |
+|       18000 |
++-------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT AVG(price) FROM PRODUCTS WHERE code=2;
++------------+
+| AVG(price) |
++------------+
+|        120 |
++------------+
+1 row in set (0.01 sec)
+
+MariaDB [we2018]> SELECT AVG(price) FROM PRODUCTS WHERE Manufacture=2;
++------------+
+| AVG(price) |
++------------+
+|        150 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT count(*) FROM products WHERE PRICE=>180;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>180' at line 1
+MariaDB [we2018]> SELECT count(*) FROM products WHERE PRICE>=180;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180 ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ASC' at line 1
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180 AS ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS ASC' at line 1
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180 AS NAME in ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AS NAME in ASC' at line 1
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180  NAME ORDER BY NAME ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'NAME ORDER BY NAME ASC' at line 1
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180  ORDER BY NAME ASC;
++------------+-------+
+| name       | PRICE |
++------------+-------+
+| DVD burner |   180 |
+| DVD drive  |   180 |
+| Hard Drive |   240 |
+| Monitor    |   240 |
+| Printer    |   270 |
++------------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE price >= 180  ORDER BY PRICE ASC;
++------------+-------+
+| name       | PRICE |
++------------+-------+
+| DVD drive  |   180 |
+| DVD burner |   180 |
+| Hard Drive |   240 |
+| Monitor    |   240 |
+| Printer    |   270 |
++------------+-------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, PRICE FROM PRODUCTS LIMIT 1;
++------------+-------+
+| name       | PRICE |
++------------+-------+
+| Hard Drive |   240 |
++------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name, PRICE FROM products WHERE ORDER BY PRICE ASC LIMIT 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ORDER BY PRICE ASC LIMIT 1' at line 1
+MariaDB [we2018]> SELECT name, PRICE FROM products ORDER BY PRICE ASC LIMIT 1;
++-------------+-------+
+| name        | PRICE |
++-------------+-------+
+| Floppy Disk |     5 |
++-------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> UPDATE PRODUCTS SET name='Laser Printer' where code=8;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS;
++------+-----------------+-------+-------------+
+| Code | Name            | price | Manufacture |
++------+-----------------+-------+-------------+
+|    1 | Hard Drive      |   240 |           5 |
+|    2 | Memory          |   120 |           6 |
+|    3 | zip drive       |   150 |           4 |
+|    4 | Floppy Disk     |     5 |           6 |
+|    5 | Monitor         |   240 |           1 |
+|    6 | DVD drive       |   180 |           2 |
+|    7 | CD drive        |    90 |           2 |
+|    8 | Laser Printer   |   270 |           3 |
+|    9 | Toner cartridge |    66 |           3 |
+|   10 | DVD burner      |   180 |           2 |
++------+-----------------+-------+-------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE manufacture ANY(6,1,5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ANY(6,1,5)' at line 1
+MariaDB [we2018]> SELECT * FROM products WHERE manufacture IN(6,1,5);
++------+-------------+-------+-------------+
+| Code | Name        | price | Manufacture |
++------+-------------+-------+-------------+
+|    1 | Hard Drive  |   240 |           5 |
+|    2 | Memory      |   120 |           6 |
+|    4 | Floppy Disk |     5 |           6 |
+|    5 | Monitor     |   240 |           1 |
++------+-------------+-------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM products WHERE manufacture = ANY( SELECT CODE FROM MANUFACTURE WHERE NAME='SONY');
+ERROR 1146 (42S02): Table 'we2018.manufacture' doesn't exist
+MariaDB [we2018]> SELECT * FROM products WHERE manufacture = ANY( SELECT CODE FROM MANUFACTURES WHERE NAME='SONY');
++------+---------+-------+-------------+
+| Code | Name    | price | Manufacture |
++------+---------+-------+-------------+
+|    5 | Monitor |   240 |           1 |
++------+---------+-------+-------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT (price*0.9) FROM PRODUCTS;
++-------------+
+| (price*0.9) |
++-------------+
+|         216 |
+|         108 |
+|         135 |
+|         4.5 |
+|         216 |
+|         162 |
+|          81 |
+|         243 |
+|        59.4 |
+|         162 |
++-------------+
+10 rows in set (0.01 sec)
+
+MariaDB [we2018]> SELECT CONCAT(NAME, PRICE) FROM products;
++---------------------+
+| CONCAT(NAME, PRICE) |
++---------------------+
+| Hard Drive240       |
+| Memory120           |
+| zip drive150        |
+| Floppy Disk5        |
+| Monitor240          |
+| DVD drive180        |
+| CD drive90          |
+| Laser Printer270    |
+| Toner cartridge66   |
+| DVD burner180       |
++---------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name,CONCAT('$', PRICE) FROM products;
++-----------------+--------------------+
+| name            | CONCAT('$', PRICE) |
++-----------------+--------------------+
+| Hard Drive      | $240               |
+| Memory          | $120               |
+| zip drive       | $150               |
+| Floppy Disk     | $5                 |
+| Monitor         | $240               |
+| DVD drive       | $180               |
+| CD drive        | $90                |
+| Laser Printer   | $270               |
+| Toner cartridge | $66                |
+| DVD burner      | $180               |
++-----------------+--------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name,CONCAT('$', PRICE),concat(price * 100, 'cents') FROM products;
++-----------------+--------------------+------------------------------+
+| name            | CONCAT('$', PRICE) | concat(price * 100, 'cents') |
++-----------------+--------------------+------------------------------+
+| Hard Drive      | $240               | 24000cents                   |
+| Memory          | $120               | 12000cents                   |
+| zip drive       | $150               | 15000cents                   |
+| Floppy Disk     | $5                 | 500cents                     |
+| Monitor         | $240               | 24000cents                   |
+| DVD drive       | $180               | 18000cents                   |
+| CD drive        | $90                | 9000cents                    |
+| Laser Printer   | $270               | 27000cents                   |
+| Toner cartridge | $66                | 6600cents                    |
+| DVD burner      | $180               | 18000cents                   |
++-----------------+--------------------+------------------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name,CONCAT('$', PRICE),concat(price * 100, ' cents') FROM products;
++-----------------+--------------------+-------------------------------+
+| name            | CONCAT('$', PRICE) | concat(price * 100, ' cents') |
++-----------------+--------------------+-------------------------------+
+| Hard Drive      | $240               | 24000 cents                   |
+| Memory          | $120               | 12000 cents                   |
+| zip drive       | $150               | 15000 cents                   |
+| Floppy Disk     | $5                 | 500 cents                     |
+| Monitor         | $240               | 24000 cents                   |
+| DVD drive       | $180               | 18000 cents                   |
+| CD drive        | $90                | 9000 cents                    |
+| Laser Printer   | $270               | 27000 cents                   |
+| Toner cartridge | $66                | 6600 cents                    |
+| DVD burner      | $180               | 18000 cents                   |
++-----------------+--------------------+-------------------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name,CONCAT('$', PRICE) as "NEW price" FROM products;
++-----------------+-----------+
+| name            | NEW price |
++-----------------+-----------+
+| Hard Drive      | $240      |
+| Memory          | $120      |
+| zip drive       | $150      |
+| Floppy Disk     | $5        |
+| Monitor         | $240      |
+| DVD drive       | $180      |
+| CD drive        | $90       |
+| Laser Printer   | $270      |
+| Toner cartridge | $66       |
+| DVD burner      | $180      |
++-----------------+-----------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name,CONCAT('$', PRICE) "NEW PRICE",concat(price * 100, ' cents') "PRICE IN CENTS" FROM products;
++-----------------+-----------+----------------+
+| name            | NEW PRICE | PRICE IN CENTS |
++-----------------+-----------+----------------+
+| Hard Drive      | $240      | 24000 cents    |
+| Memory          | $120      | 12000 cents    |
+| zip drive       | $150      | 15000 cents    |
+| Floppy Disk     | $5        | 500 cents      |
+| Monitor         | $240      | 24000 cents    |
+| DVD drive       | $180      | 18000 cents    |
+| CD drive        | $90       | 9000 cents     |
+| Laser Printer   | $270      | 27000 cents    |
+| Toner cartridge | $66       | 6600 cents     |
+| DVD burner      | $180      | 18000 cents    |
++-----------------+-----------+----------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT MIN(*) FROM products ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*) FROM products' at line 1
+MariaDB [we2018]> SELECT MIN(PRICE) FROM products ;
++------------+
+| MIN(PRICE) |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS WHERE NAME LIKE '%DRIVE';
++------+------------+-------+-------------+
+| Code | Name       | price | Manufacture |
++------+------------+-------+-------------+
+|    1 | Hard Drive |   240 |           5 |
+|    3 | zip drive  |   150 |           4 |
+|    6 | DVD drive  |   180 |           2 |
+|    7 | CD drive   |    90 |           2 |
++------+------------+-------+-------------+
+4 rows in set (0.01 sec)
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS WHERE NAME LIKE '_V%';
++------+------------+-------+-------------+
+| Code | Name       | price | Manufacture |
++------+------------+-------+-------------+
+|    6 | DVD drive  |   180 |           2 |
+|   10 | DVD burner |   180 |           2 |
++------+------------+-------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS WHERE NAME LIKE '__D%';
++------+------------+-------+-------------+
+| Code | Name       | price | Manufacture |
++------+------------+-------+-------------+
+|    6 | DVD drive  |   180 |           2 |
+|   10 | DVD burner |   180 |           2 |
++------+------------+-------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS WHERE NAME regexp '.*';
++------+-----------------+-------+-------------+
+| Code | Name            | price | Manufacture |
++------+-----------------+-------+-------------+
+|    1 | Hard Drive      |   240 |           5 |
+|    2 | Memory          |   120 |           6 |
+|    3 | zip drive       |   150 |           4 |
+|    4 | Floppy Disk     |     5 |           6 |
+|    5 | Monitor         |   240 |           1 |
+|    6 | DVD drive       |   180 |           2 |
+|    7 | CD drive        |    90 |           2 |
+|    8 | Laser Printer   |   270 |           3 |
+|    9 | Toner cartridge |    66 |           3 |
+|   10 | DVD burner      |   180 |           2 |
++------+-----------------+-------+-------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM PRODUCTS WHERE NAME regexp 'm.*';
++------+---------+-------+-------------+
+| Code | Name    | price | Manufacture |
++------+---------+-------+-------------+
+|    2 | Memory  |   120 |           6 |
+|    5 | Monitor |   240 |           1 |
++------+---------+-------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'M1W3K1' REGEXP '[A-Z][0-9]{2}';
++---------------------------------+
+| 'M1W3K1' REGEXP '[A-Z][0-9]{2}' |
++---------------------------------+
+|                               0 |
++---------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'M1W3K1' REGEXP '[A-Z][0-9]{3}';
++---------------------------------+
+| 'M1W3K1' REGEXP '[A-Z][0-9]{3}' |
++---------------------------------+
+|                               0 |
++---------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'M1W3K1' REGEXP '[A-Z]{3}[0-9]{3}';
++------------------------------------+
+| 'M1W3K1' REGEXP '[A-Z]{3}[0-9]{3}' |
++------------------------------------+
+|                                  0 |
++------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'M1W3K1' REGEXP '([A-Z][0-9]){3}';
++-----------------------------------+
+| 'M1W3K1' REGEXP '([A-Z][0-9]){3}' |
++-----------------------------------+
+|                                 1 |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'L7A3H8' REGEXP '([A-Z][0-9]){3}';
++-----------------------------------+
+| 'L7A3H8' REGEXP '([A-Z][0-9]){3}' |
++-----------------------------------+
+|                                 1 |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 'L7A3h8' REGEXP '([A-Z|a-z][0-9]){3}';
++---------------------------------------+
+| 'L7A3h8' REGEXP '([A-Z|a-z][0-9]){3}' |
++---------------------------------------+
+|                                     1 |
++---------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO PRODUCT VALUES(11,"Loud Speaker",70,2);
+ERROR 1146 (42S02): Table 'we2018.product' doesn't exist
+MariaDB [we2018]> INSERT INTO PRODUCTs VALUES(11,"Loud Speaker",70,2);
+Query OK, 1 row affected (0.08 sec)
+
+MariaDB [we2018]> delete from products where code=11;
+Query OK, 1 row affected (0.35 sec)
+
+MariaDB [we2018]> select * from products;
++------+-----------------+-------+-------------+
+| Code | Name            | price | Manufacture |
++------+-----------------+-------+-------------+
+|    1 | Hard Drive      |   240 |           5 |
+|    2 | Memory          |   120 |           6 |
+|    3 | zip drive       |   150 |           4 |
+|    4 | Floppy Disk     |     5 |           6 |
+|    5 | Monitor         |   240 |           1 |
+|    6 | DVD drive       |   180 |           2 |
+|    7 | CD drive        |    90 |           2 |
+|    8 | Laser Printer   |   270 |           3 |
+|    9 | Toner cartridge |    66 |           3 |
+|   10 | DVD burner      |   180 |           2 |
++------+-----------------+-------+-------------+
+10 rows in set (0.00 sec)
+
+MariaDB [we2018]>

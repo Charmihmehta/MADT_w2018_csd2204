@@ -1,0 +1,385 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p;
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE WE2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> USE DATABASE WE2018;
+ERROR 1049 (42000): Unknown database 'database'
+MariaDB [(none)]> USE WE2018;
+Database changed
+MariaDB [WE2018]> CREATE TABLE manufacturers (code int(10) Primary key, name varchar(25) Unique);
+Query OK, 0 rows affected (1.85 sec)
+
+MariaDB [WE2018]> DESC manufactureres;
+ERROR 1146 (42S02): Table 'we2018.manufactureres' doesn't exist
+MariaDB [WE2018]> DESC manufacturers;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| code  | int(10)     | NO   | PRI | NULL    |       |
+| name  | varchar(25) | YES  | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+MariaDB [WE2018]> CREATE TABLE PRODUCTS (code int(10) Primary key, name varchar(25) NOT NULL , price float(10) check(price>0), manufacturer int (10) REFRENCES MANUFACTURERS CODE  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'MANUFACTURERS CODE  )' at line 1
+MariaDB [WE2018]> CREATE TABLE PRODUCTS (code int(10) Primary key, name varchar(25) NOT NULL , price float(10) check(price>0), manufacturer int (10) REFRENCES MANUFACTURERS (CODE)  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'MANUFACTURERS (CODE)  )' at line 1
+MariaDB [WE2018]> CREATE TABLE PRODUCTS (code int(10) Primary key, name varchar(25) NOT NULL , price float(10) check(price>0), manufacturer int (10) REFERENCES MANUFACTURERS (CODE)  );
+Query OK, 0 rows affected (3.52 sec)
+
+MariaDB [WE2018]> DESC PRODUCTS;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| code         | int(10)     | NO   | PRI | NULL    |       |
+| name         | varchar(25) | NO   |     | NULL    |       |
+| price        | float       | YES  |     | NULL    |       |
+| manufacturer | int(10)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+MariaDB [WE2018]> INSERT INTO MANUFACTURERS VALUES(1, 'SONY');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [WE2018]> SELECT * FROM MANUFACTURERS;
++------+------+
+| code | name |
++------+------+
+|    1 | SONY |
++------+------+
+1 row in set (0.00 sec)
+
+MariaDB [WE2018]> INSERT INTO MANUFACTURERS VALUES(1, 'SONY');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [WE2018]> INSERT INTO MANUFACTURERS VALUES(2, 'SONY');
+ERROR 1062 (23000): Duplicate entry 'SONY' for key 'name'
+MariaDB [WE2018]> INSERT INTO MANUFACTURERS VALUES(2, 'Creative Labs');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [WE2018]> INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+Query OK, 1 row affected (0.05 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.06 sec)
+
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [WE2018]> SELECT * FROM MANUFACTURERS;
++------+-----------------+
+| code | name            |
++------+-----------------+
+|    2 | Creative Labs   |
+|    5 | Fujitsu         |
+|    3 | Hewlett-Packard |
+|    4 | Iomega          |
+|    1 | SONY            |
+|    6 | Winchester      |
++------+-----------------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [WE2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',0,5);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [WE2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',0,6);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [WE2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'Mem',-1,6);
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [WE2018]> SELECT * FROM products ORDER BY price;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    3 | Mem        |    -1 |            6 |
+|    2 | Memory     |     0 |            6 |
+|    1 | Hard drive |   240 |            5 |
++------+------------+-------+--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM products ORDER BY price, manufacturer;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    3 | Mem        |    -1 |            6 |
+|    2 | Memory     |     0 |            6 |
+|    1 | Hard drive |   240 |            5 |
++------+------------+-------+--------------+
+3 rows in set (0.02 sec)
+
+MariaDB [WE2018]> SELECT * FROM products ORDER BY price DESC;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    1 | Hard drive |   240 |            5 |
+|    2 | Memory     |     0 |            6 |
+|    3 | Mem        |    -1 |            6 |
++------+------------+-------+--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM products ORDER BY price ASC;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    3 | Mem        |    -1 |            6 |
+|    2 | Memory     |     0 |            6 |
+|    1 | Hard drive |   240 |            5 |
++------+------------+-------+--------------+
+3 rows in set (0.00 sec)
+
+MariaDB [WE2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(11,'ZIP drive',150,4);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+Query OK, 1 row affected (0.03 sec)
+
+Query OK, 1 row affected (0.14 sec)
+
+Query OK, 1 row affected (0.10 sec)
+
+Query OK, 1 row affected (0.07 sec)
+
+Query OK, 1 row affected (0.03 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [WE2018]> SELECT * FROM product WHERE name LIKE '%DRIVE';
+ERROR 1146 (42S02): Table 'we2018.product' doesn't exist
+MariaDB [WE2018]> SELECT * FROM productS WHERE name LIKE '%DRIVE';
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    1 | Hard drive |   240 |            5 |
+|    6 | DVD drive  |   180 |            2 |
+|    7 | CD drive   |    90 |            2 |
+|   11 | ZIP drive  |   150 |            4 |
++------+------------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM productS WHERE name LIKE '%DRIVE' ORDER BY PRICE DECS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DECS' at line 1
+MariaDB [WE2018]> SELECT * FROM productS WHERE name LIKE '%DRIVE' ORDER BY PRICE DESC;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    1 | Hard drive |   240 |            5 |
+|    6 | DVD drive  |   180 |            2 |
+|   11 | ZIP drive  |   150 |            4 |
+|    7 | CD drive   |    90 |            2 |
++------+------------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM productS ORDER BY PRICE DECS WHERE name LIKE '%DRIVE' ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DECS WHERE name LIKE '%DRIVE'' at line 1
+MariaDB [WE2018]> SELECT * FROM productS ORDER BY PRICE DESC;
++------+-----------------+-------+--------------+
+| code | name            | price | manufacturer |
++------+-----------------+-------+--------------+
+|    8 | Printer         |   270 |            3 |
+|    1 | Hard drive      |   240 |            5 |
+|    5 | Monitor         |   240 |            1 |
+|   10 | DVD burner      |   180 |            2 |
+|    6 | DVD drive       |   180 |            2 |
+|   11 | ZIP drive       |   150 |            4 |
+|    7 | CD drive        |    90 |            2 |
+|    9 | Toner cartridge |    66 |            3 |
+|    4 | Floppy disk     |     5 |            6 |
+|    2 | Memory          |     0 |            6 |
+|    3 | Mem             |    -1 |            6 |
++------+-----------------+-------+--------------+
+11 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM productS GROUP BY MANUFACTURER DESC;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    2 | Memory     |     0 |            6 |
+|    1 | Hard drive |   240 |            5 |
+|   11 | ZIP drive  |   150 |            4 |
+|    8 | Printer    |   270 |            3 |
+|    6 | DVD drive  |   180 |            2 |
+|    5 | Monitor    |   240 |            1 |
++------+------------+-------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT * FROM productS GROUP BY MANUFACTURER;
++------+------------+-------+--------------+
+| code | name       | price | manufacturer |
++------+------------+-------+--------------+
+|    5 | Monitor    |   240 |            1 |
+|    6 | DVD drive  |   180 |            2 |
+|    8 | Printer    |   270 |            3 |
+|   11 | ZIP drive  |   150 |            4 |
+|    1 | Hard drive |   240 |            5 |
+|    2 | Memory     |     0 |            6 |
++------+------------+-------+--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS GROUP BY MANUFACTURER;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            1 |        1 |
+|            2 |        3 |
+|            3 |        2 |
+|            4 |        1 |
+|            5 |        1 |
+|            6 |        3 |
++--------------+----------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS ;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            5 |       11 |
++--------------+----------+
+1 row in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER FROM productS GROUP BY MANUFACTURER;
++--------------+
+| MANUFACTURER |
++--------------+
+|            1 |
+|            2 |
+|            3 |
+|            4 |
+|            5 |
+|            6 |
++--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,SUM(PRICE) FROM productS GROUP BY MANUFACTURER;
++--------------+------------+
+| MANUFACTURER | SUM(PRICE) |
++--------------+------------+
+|            1 |        240 |
+|            2 |        450 |
+|            3 |        336 |
+|            4 |        150 |
+|            5 |        240 |
+|            6 |          4 |
++--------------+------------+
+6 rows in set (0.01 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*)>=2 FROM productS GROUP BY MANUFACTURER;
++--------------+-------------+
+| MANUFACTURER | COUNT(*)>=2 |
++--------------+-------------+
+|            1 |           0 |
+|            2 |           1 |
+|            3 |           1 |
+|            4 |           0 |
+|            5 |           0 |
+|            6 |           1 |
++--------------+-------------+
+6 rows in set (0.01 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*)>=2 FROM productS WHERE COUNT(*)>=2 GROUP BY MANUFACTURER;
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*)>=2 FROM productS WHERE COUNT(*)>=2;
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*)>=2 FROM productS GROUP BY MANUFACTURER HAVING COUNT(*)>=2;
++--------------+-------------+
+| MANUFACTURER | COUNT(*)>=2 |
++--------------+-------------+
+|            2 |           1 |
+|            3 |           1 |
+|            6 |           1 |
++--------------+-------------+
+3 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS GROUP BY MANUFACTURER HAVING COUNT(*)>=2;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            2 |        3 |
+|            3 |        2 |
+|            6 |        3 |
++--------------+----------+
+3 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS GROUP BY MANUFACTURER HAVING COUNT(*)>=2 AND MANUFACTURER=2;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            2 |        3 |
++--------------+----------+
+1 row in set (0.03 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER, SUM(PRICE) ,COUNT(*)>=2 FROM productS GROUP BY MANUFACTURER;
++--------------+------------+-------------+
+| MANUFACTURER | SUM(PRICE) | COUNT(*)>=2 |
++--------------+------------+-------------+
+|            1 |        240 |           0 |
+|            2 |        450 |           1 |
+|            3 |        336 |           1 |
+|            4 |        150 |           0 |
+|            5 |        240 |           0 |
+|            6 |          4 |           1 |
++--------------+------------+-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER, SUM(PRICE) ,COUNT(*) FROM productS GROUP BY MANUFACTURER;
++--------------+------------+----------+
+| MANUFACTURER | SUM(PRICE) | COUNT(*) |
++--------------+------------+----------+
+|            1 |        240 |        1 |
+|            2 |        450 |        3 |
+|            3 |        336 |        2 |
+|            4 |        150 |        1 |
+|            5 |        240 |        1 |
+|            6 |          4 |        3 |
++--------------+------------+----------+
+6 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS GROUP BY MANUFACTURER HAVING SUM(PRICE)>=240;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            1 |        1 |
+|            2 |        3 |
+|            3 |        2 |
+|            5 |        1 |
++--------------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER, SUM(PRICE) ,COUNT(*) FROM productS GROUP BY MANUFACTURER HAVING SUM(PRICE)>=240;
++--------------+------------+----------+
+| MANUFACTURER | SUM(PRICE) | COUNT(*) |
++--------------+------------+----------+
+|            1 |        240 |        1 |
+|            2 |        450 |        3 |
+|            3 |        336 |        2 |
+|            5 |        240 |        1 |
++--------------+------------+----------+
+4 rows in set (0.00 sec)
+
+MariaDB [WE2018]> SELECT MANUFACTURER ,COUNT(*) FROM productS GROUP BY MANUFACTURER HAVING  MANUFACTURER=2;
++--------------+----------+
+| MANUFACTURER | COUNT(*) |
++--------------+----------+
+|            2 |        3 |
++--------------+----------+
+1 row in set (0.00 sec)
+
+MariaDB [WE2018]>

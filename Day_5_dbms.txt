@@ -1,0 +1,545 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database we2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use we2018;
+Database changed
+MariaDB [we2018]> SELECT MOD(29,9);
++-----------+
+| MOD(29,9) |
++-----------+
+|         2 |
++-----------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT SIN(30);
++---------------------+
+| SIN(30)             |
++---------------------+
+| -0.9880316240928618 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT SIN(45);
++--------------------+
+| SIN(45)            |
++--------------------+
+| 0.8509035245341184 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT SIN(60);
++---------------------+
+| SIN(60)             |
++---------------------+
+| -0.3048106211022167 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT MIN(60,34,90);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '34,90)' at line 1
+MariaDB [we2018]> SELECT 1 + "ABC";
++-----------+
+| 1 + "ABC" |
++-----------+
+|         1 |
++-----------+
+1 row in set, 1 warning (0.00 sec)
+
+MariaDB [we2018]> SELECT 2 + "ABC";
++-----------+
+| 2 + "ABC" |
++-----------+
+|         2 |
++-----------+
+1 row in set, 1 warning (0.00 sec)
+
+MariaDB [we2018]> SELECT 2 + "ABC" + 1;
++---------------+
+| 2 + "ABC" + 1 |
++---------------+
+|             3 |
++---------------+
+1 row in set, 1 warning (0.02 sec)
+
+MariaDB [we2018]> SELECT 2 +  1;
++--------+
+| 2 +  1 |
++--------+
+|      3 |
++--------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT "XYZ" + "ABC";
++---------------+
+| "XYZ" + "ABC" |
++---------------+
+|             0 |
++---------------+
+1 row in set, 2 warnings (0.00 sec)
+
+MariaDB [we2018]> CONCAT (2,2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CONCAT (2,2)' at line 1
+MariaDB [we2018]> SELECT CONCAT (2,2);
++--------------+
+| CONCAT (2,2) |
++--------------+
+| 22           |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 20 CAST(20 AS FLOAT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CAST(20 AS FLOAT)' at line 1
+MariaDB [we2018]> SELECT 20 CAST(20 AS CHAR);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CAST(20 AS CHAR)' at line 1
+MariaDB [we2018]> SELECT 20, CAST(20 AS CHAR);
++----+------------------+
+| 20 | CAST(20 AS CHAR) |
++----+------------------+
+| 20 | 20               |
++----+------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 20, CAST(20 AS FLOAT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FLOAT)' at line 1
+MariaDB [we2018]> SELECT 20, CAST('20' AS INT);
++----+-------------------+
+| 20 | CAST('20' AS INT) |
++----+-------------------+
+| 20 |                20 |
++----+-------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT 20 + CAST('20' AS INT);
++------------------------+
+| 20 + CAST('20' AS INT) |
++------------------------+
+|                     40 |
++------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT ASCII('2');
++------------+
+| ASCII('2') |
++------------+
+|         50 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT BIN(12);
++---------+
+| BIN(12) |
++---------+
+| 1100    |
++---------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT BIT_LENGHT('CS');
+ERROR 1305 (42000): FUNCTION we2018.BIT_LENGHT does not exist
+MariaDB [we2018]> SELECT BIT_LENGTH('CS');
++------------------+
+| BIT_LENGTH('CS') |
++------------------+
+|               16 |
++------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT CHAR(77,121,33,35.6);
++----------------------+
+| CHAR(77,121,33,35.6) |
++----------------------+
+| My!$                 |
++----------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT CHAR(77,121,33,'35.6');
++------------------------+
+| CHAR(77,121,33,'35.6') |
++------------------------+
+| My!#                   |
++------------------------+
+1 row in set, 1 warning (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'de_DE');
++---------------------------+
+| FORMAT(12332.2,2,'de_DE') |
++---------------------------+
+| 12.332,20                 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'AR_IN');
++---------------------------+
+| FORMAT(12332.2,2,'AR_IN') |
++---------------------------+
+| 12,332.20                 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'EN_IN');
++---------------------------+
+| FORMAT(12332.2,2,'EN_IN') |
++---------------------------+
+| 12,332.20                 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'gu_IN');
++---------------------------+
+| FORMAT(12332.2,2,'gu_IN') |
++---------------------------+
+| 12,332.20                 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'pt_BR');
++---------------------------+
+| FORMAT(12332.2,2,'pt_BR') |
++---------------------------+
+| 12332,20                  |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT FORMAT(12332.2,2,'zh_CN');
++---------------------------+
+| FORMAT(12332.2,2,'zh_CN') |
++---------------------------+
+| 12,332.20                 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SET @a= 10;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> select @10;
++------+
+| @10  |
++------+
+| NULL |
++------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select @a;
++------+
+| @a   |
++------+
+|   10 |
++------+
+1 row in set (0.01 sec)
+
+MariaDB [we2018]> CREATE TABLE MANUFACTURER (CODE INT(10), NAME VARCHAR(20));
+Query OK, 0 rows affected (0.31 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERES;
+ERROR 1146 (42S02): Table 'we2018.manufactureres' doesn't exist
+MariaDB [we2018]> []INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[]INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony')' at line 1
+ERROR 1146 (42S02): Table 'we2018.manufacturers' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.manufacturers' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.manufacturers' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.manufacturers' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.manufacturers' doesn't exist
+MariaDB [we2018]>  CREATE TABLE MANUFACTURERS (CODE INT(10), NAME VARCHAR(20));
+Query OK, 0 rows affected (0.31 sec)
+
+MariaDB [we2018]> []INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[]INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony')' at line 1
+Query OK, 1 row affected (0.10 sec)
+
+Query OK, 1 row affected (0.11 sec)
+
+Query OK, 1 row affected (0.11 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@A;
+Empty set (0.08 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@a;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> set @a=1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@a;
+Empty set (0.00 sec)
+
+MariaDB [we2018]> select * from manufacturers;
++------+-----------------+
+| CODE | NAME            |
++------+-----------------+
+|    2 | Creative Labs   |
+|    3 | Hewlett-Packard |
+|    4 | Iomega          |
+|    5 | Fujitsu         |
+|    6 | Winchester      |
++------+-----------------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> set @b=2;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@b;
++------+---------------+
+| CODE | NAME          |
++------+---------------+
+|    2 | Creative Labs |
++------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@b into @mname;;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+ERROR: No query specified
+
+MariaDB [we2018]> SELECT * FROM MANUFACTURERS WHERE CODE=@b into @mname;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+MariaDB [we2018]> SELECT name FROM MANUFACTURERS WHERE CODE=@b into @mname;
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [we2018]> select @mname;
++---------------+
+| @mname        |
++---------------+
+| Creative Labs |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT name FROM MANUFACTURERS WHERE CODE=@b into @mname1;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> SELECT name FROM MANUFACTURERS WHERE CODE=12 into @mname2;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+MariaDB [we2018]> select @mname2;
++---------+
+| @mname2 |
++---------+
+| NULL    |
++---------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select @mcode, @mname;
++--------+---------------+
+| @mcode | @mname        |
++--------+---------------+
+| NULL   | Creative Labs |
++--------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT code,name FROM MANUFACTURERS WHERE CODE=12 into@mcode , @mname3;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+MariaDB [we2018]> select @mcode, @mname;
++--------+---------------+
+| @mcode | @mname        |
++--------+---------------+
+| NULL   | Creative Labs |
++--------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT code,name FROM MANUFACTURERS WHERE CODE=2 into @mcode , @mname3;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> select @mcode, @mname;
++--------+---------------+
+| @mcode | @mname        |
++--------+---------------+
+|      2 | Creative Labs |
++--------+---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select code, @menu :=name from manufacturers where code=3;
++------+-----------------+
+| code | @menu :=name    |
++------+-----------------+
+|    3 | Hewlett-Packard |
++------+-----------------+
+1 row in set (0.38 sec)
+
+MariaDB [we2018]> select @menu;
++-----------------+
+| @menu           |
++-----------------+
+| Hewlett-Packard |
++-----------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select ceiling (1.23);
++----------------+
+| ceiling (1.23) |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.03 sec)
+
+MariaDB [we2018]> select floor (1.23);
++--------------+
+| floor (1.23) |
++--------------+
+|            1 |
++--------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select round (-1.23);
++---------------+
+| round (-1.23) |
++---------------+
+|            -1 |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select round (-1.53);
++---------------+
+| round (-1.53) |
++---------------+
+|            -2 |
++---------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select rand();
++--------------------+
+| rand()             |
++--------------------+
+| 0.4506579185376483 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select rand();
++--------------------+
+| rand()             |
++--------------------+
+| 0.5531313024024771 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select rand();
++--------------------+
+| rand()             |
++--------------------+
+| 0.4136827871330853 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select floor( rand() * 10);
++---------------------+
+| floor( rand() * 10) |
++---------------------+
+|                   4 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select floor( rand() * 10);
++---------------------+
+| floor( rand() * 10) |
++---------------------+
+|                   8 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT DAYOFMONTH (1996-07-06);
++-------------------------+
+| DAYOFMONTH (1996-07-06) |
++-------------------------+
+|                    NULL |
++-------------------------+
+1 row in set, 1 warning (0.01 sec)
+
+MariaDB [we2018]> SELECT DAYOFMONTH ('1996-07-06');
++---------------------------+
+| DAYOFMONTH ('1996-07-06') |
++---------------------------+
+|                         6 |
++---------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [we2018]> SELECT DAYOFMONTH ('1996-06-07');
++---------------------------+
+| DAYOFMONTH ('1996-06-07') |
++---------------------------+
+|                         7 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT DAYOFMONTH ('2018-01-12');
++---------------------------+
+| DAYOFMONTH ('2018-01-12') |
++---------------------------+
+|                        12 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> DATE_ADD('2016-01-12', INTERVAL 1 DAY);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DATE_ADD('2016-01-12', INTERVAL 1 DAY)' at line 1
+MariaDB [we2018]> SELECT DATE_ADD('2016-01-12', INTERVAL 1 DAY);
++----------------------------------------+
+| DATE_ADD('2016-01-12', INTERVAL 1 DAY) |
++----------------------------------------+
+| 2016-01-13                             |
++----------------------------------------+
+1 row in set (0.03 sec)
+
+MariaDB [we2018]> SELECT DAYNAME ('2018-01-12');
++------------------------+
+| DAYNAME ('2018-01-12') |
++------------------------+
+| Friday                 |
++------------------------+
+1 row in set (0.01 sec)
+
+MariaDB [we2018]> SELECT WEEKDAY ('2018-01-12');
++------------------------+
+| WEEKDAY ('2018-01-12') |
++------------------------+
+|                      4 |
++------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [we2018]> SELECT CURDATE();
++------------+
+| CURDATE()  |
++------------+
+| 2018-01-12 |
++------------+
+1 row in set (0.01 sec)
+
+MariaDB [we2018]> SELECT DATE();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1
+MariaDB [we2018]> SELECT DATEDIFF('2018-01-12','1996-07-06');
++-------------------------------------+
+| DATEDIFF('2018-01-12','1996-07-06') |
++-------------------------------------+
+|                                7860 |
++-------------------------------------+
+1 row in set (0.02 sec)
+
+MariaDB [we2018]> SELECT DATEDIFF(CURDATE(),'1996-07-06');
++----------------------------------+
+| DATEDIFF(CURDATE(),'1996-07-06') |
++----------------------------------+
+|                             7860 |
++----------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT DATEDIFF(CURDATE(),'1996-07-06')/365;
++--------------------------------------+
+| DATEDIFF(CURDATE(),'1996-07-06')/365 |
++--------------------------------------+
+|                              21.5342 |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]>

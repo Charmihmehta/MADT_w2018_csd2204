@@ -1,0 +1,458 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database we2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> tee U:\Users\713149\DAY_8_DBMS.SQL;
+ERROR: Unknown command '\U'.
+ERROR: Unknown command '\7'.
+ERROR: Unknown command '\D'.
+Logging to file 'U:\Users\713149\DAY_8_DBMS.SQL'
+MariaDB [(none)]> USE we2018;
+Database changed
+MariaDB [we2018]> CREATE TABLE Manufacturers ( Code INTEGER, Name VARCHAR(255),);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1
+MariaDB [we2018]> CREATE TABLE Manufacturers ( Code INTEGER, Name VARCHAR(255));
+Query OK, 0 rows affected (2.45 sec)
+
+MariaDB [we2018]> CREATE TABLE Products ( Code INTEGER, Name VARCHAR(255), Price DECIMAL, Manufacturer INTEGER );
+Query OK, 0 rows affected (0.56 sec)
+
+MariaDB [we2018]> INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+Query OK, 1 row affected (0.06 sec)
+
+Query OK, 1 row affected (0.09 sec)
+
+Query OK, 1 row affected (0.41 sec)
+
+Query OK, 1 row affected (0.16 sec)
+
+Query OK, 1 row affected (0.20 sec)
+
+Query OK, 1 row affected (0.16 sec)
+
+MariaDB [we2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+Query OK, 1 row affected (0.12 sec)
+
+Query OK, 1 row affected (0.15 sec)
+
+Query OK, 1 row affected (0.24 sec)
+
+Query OK, 1 row affected (0.18 sec)
+
+Query OK, 1 row affected (0.09 sec)
+
+Query OK, 1 row affected (0.12 sec)
+
+Query OK, 1 row affected (0.12 sec)
+
+Query OK, 1 row affected (0.14 sec)
+
+Query OK, 1 row affected (0.14 sec)
+
+Query OK, 1 row affected (0.10 sec)
+
+MariaDB [we2018]> CREATE VIEW v1 AS SELECT * FROM MANUFACTURERS;
+Query OK, 0 rows affected (0.14 sec)
+
+MariaDB [we2018]> SHOW TABLES;
++------------------+
+| Tables_in_we2018 |
++------------------+
+| manufacturers    |
+| products         |
+| v1               |
++------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM V1;
++------+-----------------+
+| Code | Name            |
++------+-----------------+
+|    1 | Sony            |
+|    2 | Creative Labs   |
+|    3 | Hewlett-Packard |
+|    4 | Iomega          |
+|    5 | Fujitsu         |
+|    6 | Winchester      |
++------+-----------------+
+6 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO v1 VALUES(7,"xyz");
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> SELECT * FROM V1;
++------+-----------------+
+| Code | Name            |
++------+-----------------+
+|    1 | Sony            |
+|    2 | Creative Labs   |
+|    3 | Hewlett-Packard |
+|    4 | Iomega          |
+|    5 | Fujitsu         |
+|    6 | Winchester      |
+|    7 | xyz             |
++------+-----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [we2018]> CREATE VIEW v2 AS SELECT name FROM MANUFACTURERS;
+Query OK, 0 rows affected (0.42 sec)
+
+MariaDB [we2018]> SELECT * FROM V2;
++-----------------+
+| name            |
++-----------------+
+| Sony            |
+| Creative Labs   |
+| Hewlett-Packard |
+| Iomega          |
+| Fujitsu         |
+| Winchester      |
+| xyz             |
++-----------------+
+7 rows in set (0.00 sec)
+
+MariaDB [we2018]> desc v1;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| Code  | int(11)      | YES  |     | NULL    |       |
+| Name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [we2018]> INSERT INTO v2 VALUES(8,"xyz1");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [we2018]> desc v2;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO v2 VALUES("xyz1");
+Query OK, 1 row affected (0.09 sec)
+
+MariaDB [we2018]> SELECT * FROM V2;
++-----------------+
+| name            |
++-----------------+
+| Sony            |
+| Creative Labs   |
+| Hewlett-Packard |
+| Iomega          |
+| Fujitsu         |
+| Winchester      |
+| xyz             |
+| xyz1            |
++-----------------+
+8 rows in set (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM V1;
++------+-----------------+
+| Code | Name            |
++------+-----------------+
+|    1 | Sony            |
+|    2 | Creative Labs   |
+|    3 | Hewlett-Packard |
+|    4 | Iomega          |
+|    5 | Fujitsu         |
+|    6 | Winchester      |
+|    7 | xyz             |
+| NULL | xyz1            |
++------+-----------------+
+8 rows in set (0.00 sec)
+
+MariaDB [we2018]> create table manu(code int(10) primary key, name varchar(20));
+Query OK, 0 rows affected (0.97 sec)
+
+MariaDB [we2018]> desc manu;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| code  | int(10)     | NO   | PRI | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+MariaDB [we2018]> insert into manu values(1,"sony");
+Query OK, 1 row affected (0.33 sec)
+
+MariaDB [we2018]> insert into manu values(1,"sony");
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [we2018]> insert into manu(name) values ("sony");
+Query OK, 1 row affected, 1 warning (0.52 sec)
+
+MariaDB [we2018]> select * from manu;
++------+------+
+| code | name |
++------+------+
+|    0 | sony |
+|    1 | sony |
++------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> create view v3 as select name from manu;
+Query OK, 0 rows affected (0.56 sec)
+
+MariaDB [we2018]> insert into v3 values("sony");
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+MariaDB [we2018]> select * from manufacturers where name like "xyz%";
++------+------+
+| Code | Name |
++------+------+
+|    7 | xyz  |
+| NULL | xyz1 |
++------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> create view v4 as select * from manufacturers where name like "xyz%";
+Query OK, 0 rows affected (0.38 sec)
+
+MariaDB [we2018]> select * from v4;
++------+------+
+| Code | Name |
++------+------+
+|    7 | xyz  |
+| NULL | xyz1 |
++------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> insert into v4 values(9,"lambton college");
+Query OK, 1 row affected (0.73 sec)
+
+MariaDB [we2018]> select * from v4;
++------+------+
+| Code | Name |
++------+------+
+|    7 | xyz  |
+| NULL | xyz1 |
++------+------+
+2 rows in set (0.00 sec)
+
+MariaDB [we2018]> create view v5 as select * from manufacturers where name like "xyz%" with check option;
+Query OK, 0 rows affected (0.14 sec)
+
+MariaDB [we2018]> insert into v5 values(10,"cester college");
+ERROR 1369 (HY000): CHECK OPTION failed 'we2018.v5'
+MariaDB [we2018]> insert into v5 values(11,"xyz cester ");
+Query OK, 1 row affected (0.60 sec)
+
+MariaDB [we2018]> select * from v5;
++------+-------------+
+| Code | Name        |
++------+-------------+
+|    7 | xyz         |
+| NULL | xyz1        |
+|   11 | xyz cester  |
++------+-------------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> drop view v4;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> show tables;
++------------------+
+| Tables_in_we2018 |
++------------------+
+| manu             |
+| manufacturers    |
+| products         |
+| v1               |
+| v2               |
+| v3               |
+| v5               |
++------------------+
+7 rows in set (0.00 sec)
+
+MariaDB [we2018]> use hotel_mng;
+Database changed
+MariaDB [hotel_mng]> alter table hotel add foreign key (hotel_city) references city(city_name);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> alter table hotel add foreign key (hotel_city) references city(city_id);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> alter table hotel add foreign key (hotel_city);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [hotel_mng]> alter table guest add foreign key (guest_city) references city(city_name);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> show tables;
++---------------------+
+| Tables_in_hotel_mng |
++---------------------+
+| booking             |
+| booking_status      |
+| city                |
+| employee            |
+| employee_salary     |
+| guest               |
+| hotel               |
+| rooms               |
++---------------------+
+8 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table guest add foreign key (guest_city) references city(city_id);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> create table xyz(name varchar(25) foreign key references guest(guest_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key references guest(guest_id))' at line 1
+MariaDB [hotel_mng]> create table xyz(name varchar(25) foreign key references guest(guest_name));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key references guest(guest_name))' at line 1
+MariaDB [hotel_mng]> create table xyz(name int(5) foreign key references guest(guest_name));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key references guest(guest_name))' at line 1
+MariaDB [hotel_mng]> create table xyz(name int(5) foreign key references guest(guest_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key references guest(guest_id))' at line 1
+MariaDB [hotel_mng]> desc city;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| city_id   | int(10)     | NO   | PRI | NULL    | auto_increment |
+| city_name | varchar(15) | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+MariaDB [hotel_mng]> desc guest;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| guest_id      | int(10)      | NO   | PRI | NULL    | auto_increment |
+| guest_name    | varchar(25)  | YES  |     | NULL    |                |
+| guest_email   | varchar(30)  | YES  |     | NULL    |                |
+| guest_address | varchar(100) | YES  |     | NULL    |                |
+| guest_city    | varchar(20)  | YES  |     | NULL    |                |
+| guest_zipcode | varchar(10)  | YES  |     | NULL    |                |
+| guest_country | varchar(15)  | YES  |     | NULL    |                |
+| guest_phn     | char(15)     | YES  |     | NULL    |                |
+| guest_gender  | char(10)     | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table city add primary key(city_name);
+ERROR 1068 (42000): Multiple primary key defined
+MariaDB [hotel_mng]> alter table guest add foreign key (guest_city) references city(city_name);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> alter table guest add foreign key (guest_city) references city(city_id);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> alter table city remove primary key(city_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'primary key(city_id)' at line 1
+MariaDB [hotel_mng]> alter table city add unique key(city_name);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> desc city;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| city_id   | int(10)     | NO   | PRI | NULL    | auto_increment |
+| city_name | varchar(15) | NO   | UNI | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table guest add foreign key (guest_city) references city(city_name);
+Query OK, 0 rows affected (0.74 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> desc guest;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| guest_id      | int(10)      | NO   | PRI | NULL    | auto_increment |
+| guest_name    | varchar(25)  | YES  |     | NULL    |                |
+| guest_email   | varchar(30)  | YES  |     | NULL    |                |
+| guest_address | varchar(100) | YES  |     | NULL    |                |
+| guest_city    | varchar(20)  | YES  | MUL | NULL    |                |
+| guest_zipcode | varchar(10)  | YES  |     | NULL    |                |
+| guest_country | varchar(15)  | YES  |     | NULL    |                |
+| guest_phn     | char(15)     | YES  |     | NULL    |                |
+| guest_gender  | char(10)     | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table hotel add foreign key (hotel_city) references city(city_name);
+Query OK, 0 rows affected (0.65 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> desc hotel;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| hotel_id      | int(10)      | NO   | PRI | NULL    | auto_increment |
+| hotel_name    | varchar(25)  | NO   |     | NULL    |                |
+| hotel_address | varchar(100) | NO   |     | NULL    |                |
+| hotel_city    | varchar(10)  | YES  | MUL | NULL    |                |
+| hotel_zipcode | varchar(10)  | NO   |     | NULL    |                |
+| hotel_phn     | char(15)     | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table employee add foreign key (employee_city) references city(city_name);
+Query OK, 0 rows affected (0.82 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> desc employee;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| employee_id      | int(10)      | NO   | PRI | NULL    | auto_increment |
+| employee_name    | varchar(25)  | NO   |     | NULL    |                |
+| employee_address | varchar(100) | NO   |     | NULL    |                |
+| employee_city    | varchar(10)  | YES  | MUL | NULL    |                |
+| employee_zipcode | varchar(10)  | NO   |     | NULL    |                |
+| employee_country | varchar(15)  | NO   |     | NULL    |                |
+| employee_phn     | char(15)     | NO   |     | NULL    |                |
+| employee_gender  | char(10)     | NO   |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]> alter table booking add foreign key (hotel_id) references hotel(hotel_id);
+Query OK, 0 rows affected (2.69 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> alter table booking add foreign key (room_no) references rooms(room_no);
+Query OK, 0 rows affected (1.54 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> alter table booking add foreign key (room_type) references rooms(room_type);
+ERROR 1005 (HY000): Can't create table `hotel_mng`.`#sql-2770_2` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [hotel_mng]> alter table room_category add unique key(category_name);
+Query OK, 0 rows affected (0.25 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> alter table room add foreign key(category_name) references room_category(category_name);
+ERROR 1146 (42S02): Table 'hotel_mng.room' doesn't exist
+MariaDB [hotel_mng]> alter table rooms add foreign key(category_name) references room_category(category_name);
+Query OK, 0 rows affected (0.68 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> alter table booking add foreign key(room_type) references room_category(category_name);
+Query OK, 0 rows affected (1.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]> alter table booking_status add foreign key (booking_id) references booking(booking_id);
+Query OK, 0 rows affected (0.84 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [hotel_mng]>  desc hotel;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| hotel_id      | int(10)      | NO   | PRI | NULL    | auto_increment |
+| hotel_name    | varchar(25)  | NO   |     | NULL    |                |
+| hotel_address | varchar(100) | NO   |     | NULL    |                |
+| hotel_city    | varchar(10)  | YES  | MUL | NULL    |                |
+| hotel_zipcode | varchar(10)  | NO   |     | NULL    |                |
+| hotel_phn     | char(15)     | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+MariaDB [hotel_mng]>

@@ -1,0 +1,119 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p;
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database we2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use we2018;
+Database changed
+MariaDB [we2018]> show create table demo;
+ERROR 1146 (42S02): Table 'we2018.demo' doesn't exist
+MariaDB [we2018]>  create table demo(number int(10));
+Query OK, 0 rows affected (0.70 sec)
+
+MariaDB [we2018]> show create table demo;
++-------+----------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                 |
++-------+----------------------------------------------------------------------------------------------+
+| demo  | CREATE TABLE `demo` (
+  `number` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 |
++-------+----------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select schema_name as 'database' from information_schema.schemata;
++--------------------+
+| database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| we2018             |
++--------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [we2018]> desc information_schema.schemata;
++----------------------------+--------------+------+-----+---------+-------+
+| Field                      | Type         | Null | Key | Default | Extra |
++----------------------------+--------------+------+-----+---------+-------+
+| CATALOG_NAME               | varchar(512) | NO   |     |         |       |
+| SCHEMA_NAME                | varchar(64)  | NO   |     |         |       |
+| DEFAULT_CHARACTER_SET_NAME | varchar(32)  | NO   |     |         |       |
+| DEFAULT_COLLATION_NAME     | varchar(32)  | NO   |     |         |       |
+| SQL_PATH                   | varchar(512) | YES  |     | NULL    |       |
++----------------------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+MariaDB [we2018]> select * from information_schema.schemata;
++--------------+--------------------+----------------------------+------------------------+----------+
+| CATALOG_NAME | SCHEMA_NAME        | DEFAULT_CHARACTER_SET_NAME | DEFAULT_COLLATION_NAME | SQL_PATH |
++--------------+--------------------+----------------------------+------------------------+----------+
+| def          | information_schema | utf8                       | utf8_general_ci        | NULL     |
+| def          | mysql              | latin1                     | latin1_swedish_ci      | NULL     |
+| def          | performance_schema | utf8                       | utf8_general_ci        | NULL     |
+| def          | phpmyadmin         | utf8                       | utf8_bin               | NULL     |
+| def          | test               | latin1                     | latin1_swedish_ci      | NULL     |
+| def          | we2018             | latin1                     | latin1_swedish_ci      | NULL     |
++--------------+--------------------+----------------------------+------------------------+----------+
+6 rows in set (0.00 sec)
+
+MariaDB [we2018]> select table_name from INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='DEMO';
++------------+
+| table_name |
++------------+
+| demo       |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> select table_name from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='DEMO';
+Empty set (0.00 sec)
+
+MariaDB [we2018]> select table_name from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='WE2018';
++------------+
+| table_name |
++------------+
+| demo       |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> SELECT COLUMN_NAME FROM INFORMATIOPN_SCHEMA.TABLES WHERE TABLE_NAME='DEMO';
+ERROR 1146 (42S02): Table 'informatiopn_schema.tables' doesn't exist
+MariaDB [we2018]> SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='DEMO';
+ERROR 1054 (42S22): Unknown column 'COLUMN_NAME' in 'field list'
+MariaDB [we2018]> SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMDN WHERE TABLE_NAME='DEMO';
+ERROR 1109 (42S02): Unknown table 'columdn' in information_schema
+MariaDB [we2018]> SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMN WHERE TABLE_NAME='DEMO';
+ERROR 1109 (42S02): Unknown table 'column' in information_schema
+MariaDB [we2018]> SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='DEMO';
++-------------+
+| COLUMN_NAME |
++-------------+
+| number      |
++-------------+
+1 row in set (0.08 sec)
+
+MariaDB [we2018]> SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='DEMO';
++-----------+
+| DATA_TYPE |
++-----------+
+| int       |
++-----------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]>

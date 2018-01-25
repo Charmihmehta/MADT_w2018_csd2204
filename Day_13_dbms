@@ -3,3 +3,304 @@ Transaction Management
 -> Logical unit of statements is known as transaction.
 -> Atomicity
 -> 
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database we2018;
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [(none)]> use we2018;
+Database changed
+MariaDB [we2018]> CREATE TABLE student(
+    -> sid INT(5),
+    -> snm VARCHAR(25),
+    -> gender VARCHAR(10),
+    -> age INT(3));
+Query OK, 0 rows affected (0.33 sec)
+
+MariaDB [we2018]> INSERT student values(123,'swe', 'female', '20');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> INSERT INTO student values(1,'swe1', 'female', '35');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(2,'swe2', 'female', '35');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(2,'swe2', 'female', '35');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback;
+Query OK, 0 rows affected (0.09 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(2,'swe2', 'female', '35');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(3,'swe2', 'female', '35');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(4,'swe2', 'female', '35');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> set savepoint 1;
+ERROR 1193 (HY000): Unknown system variable 'savepoint'
+MariaDB [we2018]> savepoint 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1' at line 1
+MariaDB [we2018]> savepoint p1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> roolback;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'roolback' at line 1
+MariaDB [we2018]> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(5,'swe2', 'female', '35');
+Query OK, 1 row affected (0.08 sec)
+
+MariaDB [we2018]> savepoint p2;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(6,'swe2', 'female', '35');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(7,'swe2', 'female', '35');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
+|    4 | swe2 | female |   35 |
+|    5 | swe2 | female |   35 |
+|    6 | swe2 | female |   35 |
+|    7 | swe2 | female |   35 |
++------+------+--------+------+
+9 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback p2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'p2' at line 1
+MariaDB [we2018]> rollback to p2;
+ERROR 1305 (42000): SAVEPOINT p2 does not exist
+MariaDB [we2018]> rollback to p1;
+ERROR 1305 (42000): SAVEPOINT p1 does not exist
+MariaDB [we2018]> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|  123 | swe  | female |   20 |
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
+|    4 | swe2 | female |   35 |
+|    5 | swe2 | female |   35 |
+|    6 | swe2 | female |   35 |
+|    7 | swe2 | female |   35 |
++------+------+--------+------+
+9 rows in set (0.00 sec)
+
+MariaDB [we2018]> delete from student where sid>=3;
+Query OK, 6 rows affected (0.08 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(3,'swe2', 'female', '35');
+Query OK, 1 row affected (0.06 sec)
+
+MariaDB [we2018]> savepoint p1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(4,'swe2', 'female', '35');
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> savepoint p2;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> delete from student where sid>=3;
+Query OK, 2 rows affected (0.06 sec)
+
+MariaDB [we2018]> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
++------+------+--------+------+
+3 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(3,'swe2', 'female', '35');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> savepoint p1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(4,'swe2', 'female', '35');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> savepoint p2;
+Query OK, 0 rows affected (0.02 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
+|    4 | swe2 | female |   35 |
++------+------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback to p2;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
+|    4 | swe2 | female |   35 |
++------+------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> INSERT INTO student (sid,snm,gender,age)  values(5,'swe2', 'female', '35');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [we2018]> rollback to p2;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
+|    4 | swe2 | female |   35 |
++------+------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [we2018]> rollback to p1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> SELECT * FROM student;
++------+------+--------+------+
+| sid  | snm  | gender | age  |
++------+------+--------+------+
+|    1 | swe1 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    2 | swe2 | female |   35 |
+|    3 | swe2 | female |   35 |
++------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [we2018]>

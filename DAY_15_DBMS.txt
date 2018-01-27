@@ -1,0 +1,315 @@
+
+Setting environment for using XAMPP for Windows.
+713149@128-IMAC04 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.21-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database we2018;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use we2018;
+Database changed
+MariaDB [we2018]> create procedure add_function()
+    -> Begin
+    -> Declare a int Default 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 3
+MariaDB [we2018]> delimiter $$
+MariaDB [we2018]> create procedure add_function()
+    -> begin
+    -> declare a int default 10;
+    -> declare b, c int;
+    -> set a=a+100;
+    -> set b=3;
+    -> set c= a+ b;
+    -> select a, b,c;
+    -> end $$
+Query OK, 0 rows affected (0.05 sec)
+
+MariaDB [we2018]> call add_function()$$
++------+------+------+
+| a    | b    | c    |
++------+------+------+
+|  110 |    3 |  113 |
++------+------+------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> delimiter ##
+MariaDB [we2018]> create procedure mul_function()
+    -> begin
+    -> declare a int default 10;
+    -> declare b , c int;
+    -> set a*=10;
+    -> set b=a;
+    -> set c= a*b;
+    -> select a,b,c;
+    -> end ##
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '*=10;
+set b=a;
+set c= a*b;
+select a,b,c;
+end' at line 5
+MariaDB [we2018]> delimiter ##
+MariaDB [we2018]> create procedure mul_function()
+    -> begin
+    -> declare a int default 10;
+    -> declare b , c int;
+    -> set a=a*10;
+    -> set b=a;
+    -> set c= a*b;
+    -> select a,b,c;
+    -> end ##
+Query OK, 0 rows affected (0.16 sec)
+
+MariaDB [we2018]> call mul_function()##
++------+------+-------+
+| a    | b    | c     |
++------+------+-------+
+|  100 |  100 | 10000 |
++------+------+-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [we2018]> delimiter ##
+MariaDB [we2018]> create procedure user_variable()
+    -> begin
+    -> set @a=10;
+    -> set @b=100;
+    -> select @a, @b, @a*@b;
+    -> end##
+Query OK, 0 rows affected (0.06 sec)
+
+MariaDB [we2018]> call user_variable()##
++------+------+-------+
+| @a   | @b   | @a*@b |
++------+------+-------+
+|   10 |  100 |  1000 |
++------+------+-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [we2018]> delimiter ##
+MariaDB [we2018]> create procedure user_define_fun()
+    -> begin
+    -> declare ##
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 3
+MariaDB [we2018]> delimiter ##
+MariaDB [we2018]> create procedure user_define_fun(IN x int)
+    -> begin
+    -> declare a,b int;
+    -> set a=x;
+    -> set b= 10-a;
+    -> select a,b;
+    -> end ##
+Query OK, 0 rows affected (0.09 sec)
+
+MariaDB [we2018]> call user_define_fun(2)##
++------+------+
+| a    | b    |
++------+------+
+|    2 |    8 |
++------+------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [we2018]> create procedure user_def_fun(IN s String)
+    -> begin
+    -> select s;
+    -> end ##
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'String)
+begin
+select s;
+end' at line 1
+MariaDB [we2018]> CREATE TABLE Manufacturers ( Code INTEGER, Name VARCHAR(255));
+    -> $$
+    -> ##
+Query OK, 0 rows affected (0.66 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '$$' at line 1
+MariaDB [we2018]> delimiter ;
+MariaDB [we2018]> CREATE TABLE Manufacturers ( Code INTEGER, Name VARCHAR(255));
+ERROR 1050 (42S01): Table 'manufacturers' already exists
+MariaDB [we2018]> CREATE TABLE Products ( Code INTEGER, Name VARCHAR(255), Price DECIMAL, Manufacturer INTEGER )[6:26 PM]INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony');INSERT INTO Manufacturers(Code,Name) VALUES(2,'Creative Labs');INSERT INTO Manufacturers(Code,Name) VALUES(3,'Hewlett-Packard');INSERT INTO Manufacturers(Code,Name) VALUES(4,'Iomega');INSERT INTO Manufacturers(Code,Name) VALUES(5,'Fujitsu');INSERT INTO Manufacturers(Code,Name) VALUES(6,'Winchester');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '[6:26 PM]INSERT INTO Manufacturers(Code,Name) VALUES(1,'Sony')' at line 1
+Query OK, 1 row affected (0.06 sec)
+
+Query OK, 1 row affected (0.06 sec)
+
+Query OK, 1 row affected (0.17 sec)
+
+Query OK, 1 row affected (0.09 sec)
+
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+ERROR 1146 (42S02): Table 'we2018.products' doesn't exist
+MariaDB [we2018]> CREATE TABLE Products ( Code INTEGER, Name VARCHAR(255), Price DECIMAL, Manufacturer INTEGER );
+Query OK, 0 rows affected (0.65 sec)
+
+MariaDB [we2018]> INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(1,'Hard drive',240,5);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(2,'Memory',120,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(3,'ZIP drive',150,4);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(4,'Floppy disk',5,6);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(5,'Monitor',240,1);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(6,'DVD drive',180,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(7,'CD drive',90,2);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(8,'Printer',270,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(9,'Toner cartridge',66,3);INSERT INTO Products(Code,Name,Price,Manufacturer) VALUES(10,'DVD burner',180,2);
+Query OK, 1 row affected (0.08 sec)
+
+Query OK, 1 row affected (0.09 sec)
+
+Query OK, 1 row affected (0.18 sec)
+
+Query OK, 1 row affected (0.12 sec)
+
+Query OK, 1 row affected (0.17 sec)
+
+Query OK, 1 row affected (0.14 sec)
+
+Query OK, 1 row affected (0.06 sec)
+
+Query OK, 1 row affected (0.05 sec)
+
+Query OK, 1 row affected (0.16 sec)
+
+Query OK, 1 row affected (0.15 sec)
+
+MariaDB [we2018]> delimiter $$
+MariaDB [we2018]> create or replace procedure sum_product()    begin        select sum(price) from products;    end$$
+Query OK, 0 rows affected (0.09 sec)
+
+MariaDB [we2018]> call sum_product()$$
++------------+
+| sum(price) |
++------------+
+|       1541 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [we2018]> create or replace procedure proc_in        (IN pcode number(5), IN name varchar,         IN price number, IN manufacturer number)         begin             insert into products values(pcode, name, price, manufacturer);         end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'number(5), IN name varchar,         IN price number, IN manufacturer number)    ' at line 1
+MariaDB [we2018]> create or replace procedure proc_in        (IN pcode number, IN name varchar,         IN price number, IN manufacturer number)         begin             insert into products values(pcode, name, price, manufacturer);         end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'number, IN name varchar,         IN price number, IN manufacturer number)       ' at line 1
+MariaDB [we2018]> create or replace procedure proc_in        (IN pcode int, IN name varchar,         IN price int, IN manufacturer int)         begin             insert into products values(pcode, name, price, manufacturer);         end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '         IN price int, IN manufacturer int)         begin             insert int' at line 1
+MariaDB [we2018]> create or replace procedure proc_in
+    ->  (IN pcode number(5), IN name varchar,
+    ->   IN price number, IN manufacturer number)
+    -> begin
+    ->  insert into products values(pcode, name, price, manufacturer);
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'number(5), IN name varchar,
+  IN price number, IN manufacturer number)
+begin
+ i' at line 2
+MariaDB [we2018]> create or replace procedure proc_in
+    ->  (IN pcode int, IN name varchar,
+    ->   IN price int, IN manufacturer int)
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '
+  IN price int, IN manufacturer int)
+end' at line 2
+MariaDB [we2018]> create or replace procedure proc_in
+    ->  (IN pcode int,  name varchar,
+    ->    price int,  manufacturer int)
+    -> begin
+    ->  insert into products values(pcode, name, price, manufacturer);
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '
+   price int,  manufacturer int)
+begin
+ insert into products values(pcode, nam' at line 2
+MariaDB [we2018]> create or replace procedure proc_in
+    ->  (OUT pcode int,  name varchar,
+    ->    price int,  manufacturer int)
+    -> begin
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '
+   price int,  manufacturer int)
+begin
+end' at line 2
+MariaDB [we2018]> create procedure insert_product
+    -> (IN pcode int(3), IN name varchar(50), IN price Double , In manufacturer int(3))
+    -> begin
+    -> insert into products values(pcode,name,price,manufacturer);
+    -> end$$
+Query OK, 0 rows affected (0.06 sec)
+
+MariaDB [we2018]> call insert_product()$$
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE we2018.insert_product; expected 4, got 0
+MariaDB [we2018]> call insert_product(11,"xyz",20,2)$$
+Query OK, 1 row affected (0.09 sec)
+
+MariaDB [we2018]> select * from products;
+    -> $$
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | xyz             |    20 |            2 |
++------+-----------------+-------+--------------+
+11 rows in set (0.00 sec)
+
+MariaDB [we2018]> create or replace procedure price_cal(out highest_price int)
+    -> select max(price) into highest_price from products;
+    -> end$$
+Query OK, 0 rows affected (0.16 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'end' at line 1
+MariaDB [we2018]> delimiter $$
+MariaDB [we2018]> create or replace procedure price_cal(out highest_price int)
+    -> select max(price) into highest_price from products;
+    -> end$$
+Query OK, 0 rows affected (0.09 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'end' at line 1
+MariaDB [we2018]> end $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'end' at line 1
+MariaDB [we2018]> create or replace procedure price_cal(out highest_price int)
+    -> begin
+    -> select max(price) into highest_price from products;
+    -> end$$
+Query OK, 0 rows affected (0.08 sec)
+
+MariaDB [we2018]> call price_cal(@a)$$
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [we2018]> select @a$$
++------+
+| @a   |
++------+
+|  270 |
++------+
+1 row in set (0.00 sec)
+
+MariaDB [we2018]> create or replace trigger price_update before insert on products     FOR EACH ROW    begin        if new.price<1 then            signal sqlstate '46000' set message_text = 'invalid input for price';        end if;   end$$
+Query OK, 0 rows affected (0.19 sec)
+
+MariaDB [we2018]> insert into products values(1,"xas",0,1);
+    -> $$
+ERROR 1644 (46000): invalid input for price
+MariaDB [we2018]>
